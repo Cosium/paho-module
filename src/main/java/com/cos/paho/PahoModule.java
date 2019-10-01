@@ -1,5 +1,6 @@
 package com.cos.paho;
 
+import com.cos.paho.internal.Slf4jLogger;
 import org.eclipse.paho.client.mqttv3.logging.LoggerFactory;
 
 /** @author Réda Housni Alaoui */

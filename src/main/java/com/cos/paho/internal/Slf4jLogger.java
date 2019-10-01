@@ -1,11 +1,11 @@
-package com.cos.paho;
+package com.cos.paho.internal;
 
 import java.util.ResourceBundle;
 import org.eclipse.paho.client.mqttv3.logging.Logger;
 import org.slf4j.LoggerFactory;
 
 /** @author Réda Housni Alaoui */
-class Slf4jLogger implements Logger {
+public class Slf4jLogger implements Logger {
 
   private ResourceBundle messageCatalog;
 
