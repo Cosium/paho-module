@@ -8,7 +8,7 @@
 
     <groupId>com.cos.paho</groupId>
     <artifactId>paho-module</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Eclipse Paho Module</name>
 
     <properties>
@@ -88,4 +88,8 @@
             </plugin>
         </plugins>
     </build>
+
+  <scm>
+    <tag>1.0</tag>
+  </scm>
 </project>
