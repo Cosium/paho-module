@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cos.maven</groupId>
+        <artifactId>maven-superpom</artifactId>
+        <version>1.06.17</version>
+    </parent>
+
+    <groupId>com.cos.paho</groupId>
+    <artifactId>paho-module</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Eclipse Paho Module</name>
+
+    <properties>
+        <slf4j.version>1.7.25</slf4j.version>
+        <paho.version>1.2.2</paho.version>
+        <maven-git-code-format.version>1.31</maven-git-code-format.version>
+
+        <junit.version>4.12</junit.version>
+        <mockito.version>2.19.1</mockito.version>
+        <assertj.version>3.10.0</assertj.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>${paho.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.cosium.code</groupId>
+                <artifactId>maven-git-code-format</artifactId>
+                <version>${maven-git-code-format.version}</version>
+                <configuration>
+                    <truncateHooksBaseScripts>true</truncateHooksBaseScripts>
+                </configuration>
+                <executions>
+                    <execution>
+			<id>install-formatter-hook</id>
+                        <goals>
+                            <goal>install-hooks</goal>
+                        </goals>
+                    </execution>
+		   <execution>
+            		<id>validate-format</id>
+            		<goals>
+              		    <goal>validate-code-format</goal>
+            		</goals>
+          	   </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
