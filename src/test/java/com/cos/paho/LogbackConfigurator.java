@@ -11,6 +11,6 @@ public class LogbackConfigurator extends BasicConfigurator {
   @Override
   public void configure(LoggerContext lc) {
     super.configure(lc);
-    lc.getLogger(Logger.ROOT_LOGGER_NAME).setLevel(Level.ALL);
+    lc.getLogger(Logger.ROOT_LOGGER_NAME).setLevel(Level.INFO);
   }
 }

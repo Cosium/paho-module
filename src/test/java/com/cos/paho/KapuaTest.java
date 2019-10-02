@@ -1,9 +1,6 @@
 package com.cos.paho;
 
-import org.eclipse.paho.client.mqttv3.IMqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -25,19 +22,14 @@ public class KapuaTest {
   @Test
   @Ignore
   public void test() throws MqttException, InterruptedException {
-    IMqttClient client =
-        pahoModule
-            .clientFactory()
-            .build(
-                SERVER_URI,
-                CLIENT_ID,
-                new MqttDefaultFilePersistence(System.getProperty("java.io.tmpdir")));
-    MqttConnectOptions options = new MqttConnectOptions();
-    options.setAutomaticReconnect(true);
-    options.setCleanSession(CLEAN_SESSION);
-    options.setUserName(USERNAME);
-    options.setPassword(PASSWORD.toCharArray());
-    client.connect(options);
+    TestingPahoClient client =
+        TestingPahoClient.builder()
+            .serverUri(SERVER_URI)
+            .clientId(CLIENT_ID)
+            .cleanSession(CLEAN_SESSION)
+            .username(USERNAME)
+            .password(PASSWORD)
+            .open();
 
     client.subscribe(
         String.format(TOPIC_TEMPLATE, ACCOUNT), (topic, message) -> System.out.println(message));
