@@ -2,7 +2,7 @@ version: '2'
 
 services:
   db:
-    image: kapua/kapua-sql:1.0.6
+    image: kapua/kapua-sql:1.1.0-SNAPSHOT
   es:
     image: elasticsearch:5.4.0
     environment:
@@ -12,9 +12,9 @@ services:
       - transport.ping_schedule=-1
       - transport.tcp.connect_timeout=30s
   events-broker:
-    image: kapua/kapua-events-broker:1.0.6
+    image: kapua/kapua-events-broker:1.1.0-SNAPSHOT
   broker:
-    image: kapua/kapua-broker:1.0.6
+    image: kapua/kapua-broker:1.1.0-SNAPSHOT
     depends_on:
       - db
       - es
@@ -29,7 +29,7 @@ services:
       - KAPUA_KEYSTORE_PASSWORD
       - ACTIVEMQ_DEBUG_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
   kapua-console:
-    image: kapua/kapua-console:1.0.6
+    image: kapua/kapua-console:1.1.0-SNAPSHOT
     depends_on:
       - broker
       - db
@@ -44,7 +44,7 @@ services:
       - KAPUA_KEYSTORE
       - KAPUA_KEYSTORE_PASSWORD
   kapua-api:
-    image: kapua/kapua-api:1.0.6
+    image: kapua/kapua-api:1.1.0-SNAPSHOT
     depends_on:
       - broker
       - db

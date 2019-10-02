@@ -1,5 +1,6 @@
 package com.cos.paho;
 
+import com.cos.paho.kapua.KuraPayloadProto;
 import java.io.File;
 import java.net.URISyntaxException;
 import org.junit.ClassRule;
@@ -23,6 +24,27 @@ public class KapuaTest extends IntegrationTest {
       new DockerComposeContainer(dockerComposeFile())
           .withLogConsumer(BROKER_SERVICE_NAME, new Slf4jLogConsumer(LOG))
           .withExposedService(BROKER_SERVICE_NAME, BROKER_WEBSOCKET_PORT);
+
+  private static final byte[] MESSAGE_PAYLOAD =
+      KuraPayloadProto.KuraPayload.newBuilder()
+          .addMetric(
+              KuraPayloadProto.KuraPayload.KuraMetric.newBuilder()
+                  .setName("hello")
+                  .setStringValue("world")
+                  .setType(KuraPayloadProto.KuraPayload.KuraMetric.ValueType.STRING)
+                  .build())
+          .build()
+          .toByteArray();
+
+  @Override
+  protected byte[] messagePayload() {
+    return MESSAGE_PAYLOAD;
+  }
+
+  @Override
+  protected String topicPrefix() {
+    return "kapua-sys/foo/";
+  }
 
   @Override
   protected String serverUri() {
