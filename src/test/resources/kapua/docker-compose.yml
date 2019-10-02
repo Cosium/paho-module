@@ -1,0 +1,60 @@
+version: '2'
+
+services:
+  db:
+    image: kapua/kapua-sql:1.0.6
+  es:
+    image: elasticsearch:5.4.0
+    environment:
+      - cluster.name=kapua-datastore
+      - discovery.type=single-node
+      - transport.host=_site_
+      - transport.ping_schedule=-1
+      - transport.tcp.connect_timeout=30s
+  events-broker:
+    image: kapua/kapua-events-broker:1.0.6
+  broker:
+    image: kapua/kapua-broker:1.0.6
+    depends_on:
+      - db
+      - es
+      - events-broker
+    environment:
+      - KAPUA_DISABLE_SSL
+      - KAPUA_CRT
+      - KAPUA_CA
+      - KAPUA_KEY
+      - KAPUA_KEY_PASSWORD
+      - KAPUA_KEYSTORE
+      - KAPUA_KEYSTORE_PASSWORD
+      - ACTIVEMQ_DEBUG_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
+  kapua-console:
+    image: kapua/kapua-console:1.0.6
+    depends_on:
+      - broker
+      - db
+      - es
+      - events-broker
+    environment:
+      - KAPUA_DISABLE_SSL
+      - KAPUA_CA
+      - KAPUA_CRT
+      - KAPUA_KEY
+      - KAPUA_KEY_PASSWORD
+      - KAPUA_KEYSTORE
+      - KAPUA_KEYSTORE_PASSWORD
+  kapua-api:
+    image: kapua/kapua-api:1.0.6
+    depends_on:
+      - broker
+      - db
+      - es
+      - events-broker
+    environment:
+      - KAPUA_DISABLE_SSL
+      - KAPUA_CA
+      - KAPUA_CRT
+      - KAPUA_KEY
+      - KAPUA_KEY_PASSWORD
+      - KAPUA_KEYSTORE
+      - KAPUA_KEYSTORE_PASSWORD
