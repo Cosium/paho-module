@@ -3,12 +3,14 @@ package com.cos.paho;
 import java.io.File;
 import java.net.URISyntaxException;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
 /** @author Réda Housni Alaoui */
+@Ignore
 public class KapuaTest extends IntegrationTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(KapuaTest.class);

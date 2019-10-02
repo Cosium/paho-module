@@ -1,6 +1,7 @@
 package com.cos.paho;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
@@ -49,8 +50,10 @@ public class TestingPahoClient implements AutoCloseable {
     client.publish(topic, message);
   }
 
-  public CountDownLatch expectMessage(String topic, byte[] messagePayload) throws MqttException {
+  public CompletableFuture<Void> expectMessage(String topic, byte[] messagePayload)
+      throws MqttException {
     CountDownLatch countDownLatch = new CountDownLatch(1);
+
     client.subscribe(
         topic,
         (t, message) -> {
@@ -59,7 +62,16 @@ public class TestingPahoClient implements AutoCloseable {
           }
           countDownLatch.countDown();
         });
-    return countDownLatch;
+
+    return CompletableFuture.runAsync(
+        () -> {
+          try {
+            countDownLatch.await();
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+          }
+        });
   }
 
   @Override
