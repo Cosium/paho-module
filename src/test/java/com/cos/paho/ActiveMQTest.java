@@ -28,7 +28,7 @@ public class ActiveMQTest extends IntegrationTest {
 
   @Override
   protected String topicPrefix() {
-    return "";
+    return "foo/bar/";
   }
 
   @Override

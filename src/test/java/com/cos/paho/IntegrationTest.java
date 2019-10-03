@@ -19,13 +19,12 @@ public abstract class IntegrationTest {
 
     TestingPahoClient consumer = openClient(UUID.randomUUID().toString());
 
-    CompletableFuture<Void> messageReception =
-        consumer.expectMessage(topicPrefix() + "+", messagePayload());
+    CompletableFuture<Void> messageReception = consumer.expectMessage("#", messagePayload());
 
     TestingPahoClient producer = openClient(UUID.randomUUID().toString());
     producer.publish(topic, new MqttMessage(messagePayload()));
 
-    messageReception.get(5, TimeUnit.SECONDS);
+    messageReception.get(10, TimeUnit.SECONDS);
   }
 
   @Test
@@ -36,14 +35,12 @@ public abstract class IntegrationTest {
 
     String consumerClientId = UUID.randomUUID().toString();
     // We register the consumer's client id then pass it offline
-    openClient(consumerClientId).subscribe(topicPrefix() + "+").close();
+    openClient(consumerClientId).subscribe("#").close();
 
     TestingPahoClient producer = openClient(UUID.randomUUID().toString());
     producer.publish(topic, new MqttMessage(messagePayload()));
 
-    openClient(consumerClientId)
-        .expectMessage(topicPrefix() + "+", messagePayload())
-        .get(5, TimeUnit.SECONDS);
+    openClient(consumerClientId).expectMessage("#", messagePayload()).get(10, TimeUnit.SECONDS);
   }
 
   protected abstract byte[] messagePayload();

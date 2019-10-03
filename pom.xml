@@ -1,11 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.cos.maven</groupId>
-    <artifactId>maven-superpom</artifactId>
-    <version>1.06.17</version>
-  </parent>
 
   <groupId>com.cos.paho</groupId>
   <artifactId>paho-module</artifactId>
@@ -13,6 +8,8 @@
   <name>Eclipse Paho Module</name>
 
   <properties>
+    <source.level>1.8</source.level>
+    
     <slf4j.version>1.7.25</slf4j.version>
     <paho.version>1.2.2</paho.version>
     <protobuf.version>3.8.0</protobuf.version>
@@ -80,6 +77,15 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>${source.level}</source>
+          <target>${source.level}</target>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>com.github.os72</groupId>
         <artifactId>protoc-jar-maven-plugin</artifactId>
